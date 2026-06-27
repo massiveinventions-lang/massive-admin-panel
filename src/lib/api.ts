@@ -42,7 +42,10 @@ export async function api<T>(
   headers.set("Content-Type", "application/json");
   if (token) headers.set("Authorization", `Bearer ${token}`);
 
-  const res = await fetch(path, { ...init, headers });
+  const baseUrl = import.meta.env.VITE_API_URL || '';
+  const url = `${baseUrl}${path}`;
+
+  const res = await fetch(url, { ...init, headers });
   const text = await res.text();
   let body: unknown = null;
   try {
